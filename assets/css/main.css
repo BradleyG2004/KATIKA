@@ -1,8 +1,23 @@
 @font-face {
-    font-family: 'Boxing';
-    src: url('/public/fonts/BOXING-REGULAR.OTF') format('OTF');
-    font-weight: lighter;
-    font-style: normal;
-    font-display: swap;
-  }
-  
+  font-family: 'Boxing';
+  src: url('/public/fonts/BOXING-REGULAR.OTF') format('opentype');
+  font-weight: lighter;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Paquito';
+  src: url('/public/fonts/Paquito-Medium.otf') format('opentype');
+  font-weight: lighter;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ClashDisplay';
+  src: url('/public/fonts/ClashDisplay-Medium.otf') format('opentype');
+  font-weight: lighter;
+  font-style: normal;
+  font-display: swap;
+}
