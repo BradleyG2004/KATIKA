@@ -3,22 +3,22 @@
     <header class="absolute inset-x-0 top-0 z-50">
       <nav class="container mx-auto flex items-center justify-between p-6">
         <div class="flex-shrink-0">
-          <a href="/" class="flex items-center space-x-2">
+          <NuxtLink href="/" class="flex items-center space-x-2">
             <img class="h-6 w-auto" src="./image/logo.svg" alt="KATIKA" />
-          </a>
+          </NuxtLink>
         </div>
         <div class="hidden md:flex flex-1 justify-center">
           <div class="space-x-8 backdrop-blur-sm bg-white/30 rounded-full px-6 py-2">
-            <a href="/features" class="text-black font-medium">Fonctionnalités</a>
-            <a href="/how-it-works" class="text-gray-800 hover:text-black transition-colors font-medium">Comment ça marche</a>
-            <a href="/pricing" class="text-gray-800 hover:text-black transition-colors font-medium">Tarifs</a>
+            <NuxtLink href="/features" class="text-black font-medium">Fonctionnalités</NuxtLink>
+            <NuxtLink href="/how-it-works" class="text-gray-800 hover:text-black transition-colors font-medium">Comment ça marche</NuxtLink>
+            <NuxtLink href="/pricing" class="text-gray-800 hover:text-black transition-colors font-medium">Tarifs</NuxtLink>
           </div>
         </div>
         <div class="flex items-center space-x-4 flex-shrink-0">
-          <a href="/login" class="text-gray-800 hover:text-black font-medium">Se connecter</a>
-          <a href="/signup" class="bg-black/90 backdrop-blur-sm text-white px-6 py-2 rounded-full hover:bg-black transition-all transform hover:scale-105 font-medium shadow-lg">
+          <NuxtLink href="/login" class="text-gray-800 hover:text-black font-medium">Se connecter</NuxtLink>
+          <NuxtLink href="/signup" class="bg-black/90 backdrop-blur-sm text-white px-6 py-2 rounded-full hover:bg-black transition-all transform hover:scale-105 font-medium shadow-lg">
             S'inscrire
-          </a>
+          </NuxtLink>
         </div>
       </nav>
     </header>
@@ -76,9 +76,9 @@
 
         <!-- Call to Action -->
         <div class="text-center mt-16">
-          <a href="/signup" class="inline-block bg-black/90 backdrop-blur-sm text-white px-8 py-4 rounded-full hover:bg-black transition-all transform hover:scale-105 font-medium text-lg shadow-xl">
+          <NuxtLink href="/signup" class="inline-block bg-black/90 backdrop-blur-sm text-white px-8 py-4 rounded-full hover:bg-black transition-all transform hover:scale-105 font-medium text-lg shadow-xl">
             Commencer maintenant
-          </a>
+          </NuxtLink>
         </div>
       </div>
     </main>

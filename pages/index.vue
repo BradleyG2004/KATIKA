@@ -2,50 +2,50 @@
   <div class="min-h-screen bg-gradient-to-b from-white to-gray-50 relative overflow-hidden">
     <!-- Background Blur Elements -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      <div class="absolute top-0 right-0 w-96 h-96 bg-gray-100 rounded-full filter blur-3xl opacity-20 transform translate-x-1/2 -translate-y-1/2"></div>
-      <div class="absolute bottom-0 left-0 w-96 h-96 bg-gray-100 rounded-full filter blur-3xl opacity-20 transform -translate-x-1/2 translate-y-1/2"></div>
+      <div class="absolute top-0 right-0 w-96 h-96 bg-gray-100 rounded-full filter blur-3xl opacity-20 translate-x-1/2 -translate-y-1/2"></div>
+      <div class="absolute bottom-0 left-0 w-96 h-96 bg-gray-100 rounded-full filter blur-3xl opacity-20 -translate-x-1/2 translate-y-1/2"></div>
     </div>
 
     <!-- Decorative Stickers -->
     <div class="absolute top-20 right-10 w-24 h-24 animate-float">
-      <div class="w-full h-full bg-black/5 rounded-full border-2 border-black/10 transform rotate-12"></div>
+      <div class="w-full h-full bg-black/5 rounded-full border-2 border-black/10 rotate-12"></div>
       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-black font-bold text-lg">💸</div>
     </div>
 
     <div class="absolute bottom-40 left-10 w-20 h-20 animate-float-delay">
-      <div class="w-full h-full bg-black/5 rounded-full border-2 border-black/10 transform -rotate-12"></div>
+      <div class="w-full h-full bg-black/5 rounded-full border-2 border-black/10 -rotate-12"></div>
       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-black font-bold text-lg">🎯</div>
     </div>
 
     <div class="absolute top-1/3 left-1/4 w-16 h-16 animate-float-delay-2">
-      <div class="w-full h-full bg-black/5 rounded-full border-2 border-black/10 transform rotate-45"></div>
+      <div class="w-full h-full bg-black/5 rounded-full border-2 border-black/10 rotate-45"></div>
       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-black font-bold text-lg">✨</div>
     </div>
 
     <div class="absolute bottom-20 right-1/4 w-28 h-28 animate-float-delay-3">
-      <div class="w-full h-full bg-black/5 rounded-full border-2 border-black/10 transform -rotate-45"></div>
+      <div class="w-full h-full bg-black/5 rounded-full border-2 border-black/10 -rotate-45"></div>
       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-black font-bold text-lg">🚀</div>
     </div>
 
     <header class="absolute inset-x-0 top-0 z-50">
       <nav class="container mx-auto flex items-center justify-between p-6">
         <div class="flex-shrink-0">
-          <a href="/" class="flex items-center space-x-2">
+          <NuxtLink href="/" class="flex items-center space-x-2">
             <img class="h-6 w-auto" src="./image/logo.svg" alt="KATIKA" />
-          </a>
+          </NuxtLink>
         </div>
         <div class="hidden md:flex flex-1 justify-center">
           <div class="space-x-8 backdrop-blur-sm bg-white/30 rounded-full px-6 py-2">
-            <a href="/features" class="text-gray-800 hover:text-black transition-colors font-medium">Fonctionnalités</a>
-            <a href="/how-it-works" class="text-gray-800 hover:text-black transition-colors font-medium">Comment ça marche</a>
-            <a href="/pricing" class="text-gray-800 hover:text-black transition-colors font-medium">Tarifs</a>
+            <NuxtLink to="/features" class="text-gray-800 hover:text-black transition-colors font-medium">Fonctionnalités</NuxtLink>
+            <NuxtLink href="/how-it-works" class="text-gray-800 hover:text-black transition-colors font-medium">Comment ça marche</NuxtLink>
+            <NuxtLink href="/pricing" class="text-gray-800 hover:text-black transition-colors font-medium">Tarifs</NuxtLink>
           </div>
         </div>
         <div class="flex items-center space-x-4 flex-shrink-0">
-          <a href="/login" class="text-gray-800 hover:text-black font-medium">Se connecter</a>
-          <a href="/signup" class="bg-black/90 backdrop-blur-sm text-white px-6 py-2 rounded-full hover:bg-black transition-all transform hover:scale-105 font-medium shadow-lg">
+          <NuxtLink href="/login" class="text-gray-800 hover:text-black font-medium">Se connecter</NuxtLink>
+          <NuxtLink href="/signup" class="bg-black/90 backdrop-blur-sm text-white px-6 py-2 rounded-full hover:bg-black transition-all transform hover:scale-105 font-medium shadow-lg">
             S'inscrire
-          </a>
+          </NuxtLink>
         </div>
       </nav>
     </header>
@@ -63,12 +63,12 @@
             Des économies garanties sur vos services préférés.
           </p>
           <div class="flex flex-col sm:flex-row justify-center gap-4 animate-fade-in-delay-2">
-            <a href="/signup" class="bg-black/90 backdrop-blur-sm text-white px-8 py-4 rounded-full hover:bg-black transition-all transform hover:scale-105 font-medium text-lg shadow-xl">
+            <NuxtLink href="/signup" class="bg-black/90 backdrop-blur-sm text-white px-8 py-4 rounded-full hover:bg-black transition-all transform hover:scale-105 font-medium text-lg shadow-xl">
               Commencer maintenant
-            </a>
-            <a href="#how-it-works" class="bg-white/80 backdrop-blur-sm text-black px-8 py-4 rounded-full hover:bg-white transition-all transform hover:scale-105 font-medium text-lg border-2 border-black shadow-lg">
+            </NuxtLink>
+            <NuxtLink href="#how-it-works" class="bg-white/80 backdrop-blur-sm text-black px-8 py-4 rounded-full hover:bg-white transition-all transform hover:scale-105 font-medium text-lg border-2 border-black shadow-lg">
               Comment ça marche ?
-            </a>
+            </NuxtLink>
           </div>
         </div>
 
@@ -116,17 +116,14 @@ import { ref, onMounted } from 'vue'
   opacity: 0;
 }
 
-/* Ensure smooth transitions */
 .transition-all {
   transition-duration: 300ms;
 }
 
-/* Custom font */
 body {
   font-family: 'ClashDisplay', sans-serif;
 }
 
-/* Enhanced shadows */
 .shadow-lg {
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
@@ -139,13 +136,11 @@ body {
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
-/* Glass effect */
 .backdrop-blur-sm {
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
 
-/* Sticker animations */
 @keyframes float {
   0%, 100% { transform: translateY(0) rotate(12deg); }
   50% { transform: translateY(-10px) rotate(12deg); }

@@ -3,22 +3,22 @@
     <header class="absolute inset-x-0 top-0 z-50">
       <nav class="container mx-auto flex items-center justify-between p-6">
         <div class="flex-shrink-0">
-          <a href="/" class="flex items-center space-x-2">
+          <NuxtLink href="/" class="flex items-center space-x-2">
             <img class="h-6 w-auto" src="./image/logo.svg" alt="KATIKA" />
-          </a>
+          </NuxtLink>
         </div>
         <div class="hidden md:flex flex-1 justify-center">
           <div class="space-x-8 backdrop-blur-sm bg-white/30 rounded-full px-6 py-2">
-            <a href="/features" class="text-gray-800 hover:text-black transition-colors font-medium">Fonctionnalités</a>
-            <a href="/how-it-works" class="text-gray-800 hover:text-black transition-colors font-medium">Comment ça marche</a>
-            <a href="/pricing" class="text-black font-medium">Tarifs</a>
+            <NuxtLink href="/features" class="text-gray-800 hover:text-black transition-colors font-medium">Fonctionnalités</NuxtLink>
+            <NuxtLink href="/how-it-works" class="text-gray-800 hover:text-black transition-colors font-medium">Comment ça marche</NuxtLink>
+            <NuxtLink href="/pricing" class="text-black font-medium">Tarifs</NuxtLink>
           </div>
         </div>
         <div class="flex items-center space-x-4 flex-shrink-0">
-          <a href="/login" class="text-gray-800 hover:text-black font-medium">Se connecter</a>
-          <a href="/signup" class="bg-black/90 backdrop-blur-sm text-white px-6 py-2 rounded-full hover:bg-black transition-all transform hover:scale-105 font-medium shadow-lg">
+          <NuxtLink href="/login" class="text-gray-800 hover:text-black font-medium">Se connecter</NuxtLink>
+          <NuxtLink href="/signup" class="bg-black/90 backdrop-blur-sm text-white px-6 py-2 rounded-full hover:bg-black transition-all transform hover:scale-105 font-medium shadow-lg">
             S'inscrire
-          </a>
+          </NuxtLink>
         </div>
       </nav>
     </header>
@@ -50,9 +50,9 @@
                 <span>Support communautaire</span>
               </li>
             </ul>
-            <a href="/signup" class="block w-full bg-gray-100 text-black px-6 py-3 rounded-full hover:bg-gray-200 transition-all text-center">
+            <NuxtLink href="/signup" class="block w-full bg-gray-100 text-black px-6 py-3 rounded-full hover:bg-gray-200 transition-all text-center">
               Commencer
-            </a>
+            </NuxtLink>
           </div>
 
           <!-- Premium Plan -->
@@ -80,9 +80,9 @@
                 <span>Statistiques détaillées</span>
               </li>
             </ul>
-            <a href="/signup" class="block w-full bg-white text-black px-6 py-3 rounded-full hover:bg-gray-100 transition-all text-center">
+            <NuxtLink href="/signup" class="block w-full bg-white text-black px-6 py-3 rounded-full hover:bg-gray-100 transition-all text-center">
               Choisir Premium
-            </a>
+            </NuxtLink>
           </div>
 
           <!-- Business Plan -->
@@ -107,9 +107,9 @@
                 <span>Support dédié</span>
               </li>
             </ul>
-            <a href="/signup" class="block w-full bg-black/90 text-white px-6 py-3 rounded-full hover:bg-black transition-all text-center">
+            <NuxtLink href="/signup" class="block w-full bg-black/90 text-white px-6 py-3 rounded-full hover:bg-black transition-all text-center">
               Choisir Business
-            </a>
+            </NuxtLink>
           </div>
         </div>
 
