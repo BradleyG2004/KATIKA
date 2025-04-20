@@ -30,7 +30,7 @@
     <header class="absolute inset-x-0 top-0 z-50">
       <nav class="container mx-auto flex items-center justify-between p-6">
         <div class="flex-shrink-0">
-          <a href="#" class="flex items-center space-x-2">
+          <a href="/" class="flex items-center space-x-2">
             <img class="h-6 w-auto" src="./image/logo.svg" alt="KATIKA" />
           </a>
         </div>
