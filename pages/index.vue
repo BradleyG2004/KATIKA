@@ -36,9 +36,9 @@
         </div>
         <div class="hidden md:flex flex-1 justify-center">
           <div class="space-x-8 backdrop-blur-sm bg-white/30 rounded-full px-6 py-2">
-            <a href="#features" class="text-gray-800 hover:text-black transition-colors font-medium">Fonctionnalités</a>
-            <a href="#how-it-works" class="text-gray-800 hover:text-black transition-colors font-medium">Comment ça marche</a>
-            <a href="#pricing" class="text-gray-800 hover:text-black transition-colors font-medium">Tarifs</a>
+            <a href="/features" class="text-gray-800 hover:text-black transition-colors font-medium">Fonctionnalités</a>
+            <a href="/how-it-works" class="text-gray-800 hover:text-black transition-colors font-medium">Comment ça marche</a>
+            <a href="/pricing" class="text-gray-800 hover:text-black transition-colors font-medium">Tarifs</a>
           </div>
         </div>
         <div class="flex items-center space-x-4 flex-shrink-0">
