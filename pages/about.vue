@@ -30,22 +30,22 @@
     <header class="absolute inset-x-0 top-0 z-50">
       <nav class="container mx-auto flex items-center justify-between p-6">
         <div class="flex-shrink-0">
-          <a href="#" class="flex items-center space-x-2">
-            <img class="h-6 w-auto" src="./image/logo.svg" alt="KATIKA" />
-          </a>
+          <NuxtLink to="#" class="flex items-center space-x-2">
+            <img class="h-6 w-auto" src="../public/image/logo.svg" alt="KATIKA" />
+          </NuxtLink>
         </div>
         <div class="hidden md:flex flex-1 justify-center">
           <div class="space-x-8 backdrop-blur-sm bg-white/30 rounded-full px-6 py-2">
-            <a href="#features" class="text-gray-800 hover:text-black transition-colors font-medium">Fonctionnalités</a>
-            <a href="#how-it-works" class="text-gray-800 hover:text-black transition-colors font-medium">Comment ça marche</a>
-            <a href="#pricing" class="text-gray-800 hover:text-black transition-colors font-medium">Tarifs</a>
+            <NuxtLink to="#features" class="text-gray-800 hover:text-black transition-colors font-medium">Fonctionnalités</NuxtLink>
+            <NuxtLink to="#how-it-works" class="text-gray-800 hover:text-black transition-colors font-medium">Comment ça marche</NuxtLink>
+            <NuxtLink to="#pricing" class="text-gray-800 hover:text-black transition-colors font-medium">Tarifs</NuxtLink>
           </div>
         </div>
         <div class="flex items-center space-x-4 flex-shrink-0">
-          <a href="/login" class="text-gray-800 hover:text-black font-medium">Se connecter</a>
-          <a href="/signup" class="bg-black/90 backdrop-blur-sm text-white px-6 py-2 rounded-full hover:bg-black transition-all transform hover:scale-105 font-medium shadow-lg">
+          <NuxtLink to="/login" class="text-gray-800 hover:text-black font-medium">Se connecter</NuxtLink>
+          <NuxtLink to="/signup" class="bg-black/90 backdrop-blur-sm text-white px-6 py-2 rounded-full hover:bg-black transition-all transform hover:scale-105 font-medium shadow-lg">
             S'inscrire
-          </a>
+          </NuxtLink>
         </div>
       </nav>
     </header>
@@ -63,12 +63,12 @@
             Des économies garanties sur vos services préférés.
           </p>
           <div class="flex flex-col sm:flex-row justify-center gap-4 animate-fade-in-delay-2">
-            <a href="/signup" class="bg-black/90 backdrop-blur-sm text-white px-8 py-4 rounded-full hover:bg-black transition-all transform hover:scale-105 font-medium text-lg shadow-xl">
+            <NuxtLink to="/signup" class="bg-black/90 backdrop-blur-sm text-white px-8 py-4 rounded-full hover:bg-black transition-all transform hover:scale-105 font-medium text-lg shadow-xl">
               Commencer maintenant
-            </a>
-            <a href="#how-it-works" class="bg-white/80 backdrop-blur-sm text-black px-8 py-4 rounded-full hover:bg-white transition-all transform hover:scale-105 font-medium text-lg border-2 border-black shadow-lg">
+            </NuxtLink>
+            <NuxtLink to="#how-it-works" class="bg-white/80 backdrop-blur-sm text-black px-8 py-4 rounded-full hover:bg-white transition-all transform hover:scale-105 font-medium text-lg border-2 border-black shadow-lg">
               Comment ça marche ?
-            </a>
+            </NuxtLink>
           </div>
         </div>
 
