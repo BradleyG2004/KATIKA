@@ -16,7 +16,7 @@
         </div>
         <div class="flex items-center space-x-4 flex-shrink-0">
           <NuxtLink to="/login" class="text-gray-800 hover:text-black font-medium">Se connecter</NuxtLink>
-          <NuxtLink to="/signup" class="bg-black/90 backdrop-blur-sm text-white px-6 py-2 rounded-full hover:bg-black transition-all transform hover:scale-105 font-medium shadow-lg">
+          <NuxtLink to="/register" class="bg-black/90 backdrop-blur-sm text-white px-6 py-2 rounded-full hover:bg-black transition-all transform hover:scale-105 font-medium shadow-lg">
             S'inscrire
           </NuxtLink>
         </div>
@@ -50,7 +50,7 @@
                 <span>Support communautaire</span>
               </li>
             </ul>
-            <NuxtLink to="/signup" class="block w-full bg-gray-100 text-black px-6 py-3 rounded-full hover:bg-gray-200 transition-all text-center">
+            <NuxtLink to="/register" class="block w-full bg-gray-100 text-black px-6 py-3 rounded-full hover:bg-gray-200 transition-all text-center">
               Commencer
             </NuxtLink>
           </div>
@@ -80,7 +80,7 @@
                 <span>Statistiques détaillées</span>
               </li>
             </ul>
-            <NuxtLink to="/signup" class="block w-full bg-white text-black px-6 py-3 rounded-full hover:bg-gray-100 transition-all text-center">
+            <NuxtLink to="/register" class="block w-full bg-white text-black px-6 py-3 rounded-full hover:bg-gray-100 transition-all text-center">
               Choisir Premium
             </NuxtLink>
           </div>
@@ -107,7 +107,7 @@
                 <span>Support dédié</span>
               </li>
             </ul>
-            <NuxtLink to="/signup" class="block w-full bg-black/90 text-white px-6 py-3 rounded-full hover:bg-black transition-all text-center">
+            <NuxtLink to="/register" class="block w-full bg-black/90 text-white px-6 py-3 rounded-full hover:bg-black transition-all text-center">
               Choisir Business
             </NuxtLink>
           </div>

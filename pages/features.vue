@@ -16,7 +16,7 @@
         </div>
         <div class="flex items-center space-x-4 flex-shrink-0">
           <NuxtLink to="/login" class="text-gray-800 hover:text-black font-medium">Se connecter</NuxtLink>
-          <NuxtLink to="/signup" class="bg-black/90 backdrop-blur-sm text-white px-6 py-2 rounded-full hover:bg-black transition-all transform hover:scale-105 font-medium shadow-lg">
+          <NuxtLink to="/register" class="bg-black/90 backdrop-blur-sm text-white px-6 py-2 rounded-full hover:bg-black transition-all transform hover:scale-105 font-medium shadow-lg">
             S'inscrire
           </NuxtLink>
         </div>
@@ -76,7 +76,7 @@
 
         <!-- Call to Action -->
         <div class="text-center mt-16">
-          <NuxtLink to="/signup" class="inline-block bg-black/90 backdrop-blur-sm text-white px-8 py-4 rounded-full hover:bg-black transition-all transform hover:scale-105 font-medium text-lg shadow-xl">
+          <NuxtLink to="/register" class="inline-block bg-black/90 backdrop-blur-sm text-white px-8 py-4 rounded-full hover:bg-black transition-all transform hover:scale-105 font-medium text-lg shadow-xl">
             Commencer maintenant
           </NuxtLink>
         </div>

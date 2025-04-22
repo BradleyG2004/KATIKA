@@ -1,5 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import tailwindcss from "@tailwindcss/vite";
+// import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
   compatibilityDate: "2024-11-01",
@@ -14,6 +14,14 @@ export default defineNuxtConfig({
       supabaseUrl: process.env.NUXT_PUBLIC_SUPABASE_URL,
       supabaseKey: process.env.NUXT_PUBLIC_SUPABASE_KEY,
       googleClientId: process.env.GOOGLE_CLIENT_ID
+    }
+  },
+  app: {
+    head: {
+      meta: [
+        { 'http-equiv': 'Cross-Origin-Opener-Policy', content: 'same-origin' },
+        { 'http-equiv': 'Cross-Origin-Embedder-Policy', content: 'require-corp' }
+      ]
     }
   }
 });

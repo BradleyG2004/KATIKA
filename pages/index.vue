@@ -43,7 +43,7 @@
         </div>
         <div class="flex items-center space-x-4 flex-shrink-0">
           <NuxtLink to="/login" class="text-gray-800 hover:text-black font-medium">Se connecter</NuxtLink>
-          <NuxtLink to="/signup" class="bg-black/90 backdrop-blur-sm text-white px-6 py-2 rounded-full hover:bg-black transition-all transform hover:scale-105 font-medium shadow-lg">
+          <NuxtLink to="/register" class="bg-black/90 backdrop-blur-sm text-white px-6 py-2 rounded-full hover:bg-black transition-all transform hover:scale-105 font-medium shadow-lg">
             S'inscrire
           </NuxtLink>
         </div>
@@ -63,7 +63,7 @@
             Des économies garanties sur vos services préférés.
           </p>
           <div class="flex flex-col sm:flex-row justify-center gap-4 animate-fade-in-delay-2">
-            <NuxtLink to="/signup" class="bg-black/90 backdrop-blur-sm text-white px-8 py-4 rounded-full hover:bg-black transition-all transform hover:scale-105 font-medium text-lg shadow-xl">
+            <NuxtLink to="/register" class="bg-black/90 backdrop-blur-sm text-white px-8 py-4 rounded-full hover:bg-black transition-all transform hover:scale-105 font-medium text-lg shadow-xl">
               Commencer maintenant
             </NuxtLink>
             <NuxtLink to="#how-it-works" class="bg-white/80 backdrop-blur-sm text-black px-8 py-4 rounded-full hover:bg-white transition-all transform hover:scale-105 font-medium text-lg border-2 border-black shadow-lg">

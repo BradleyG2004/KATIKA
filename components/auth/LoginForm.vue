@@ -213,40 +213,41 @@ onMounted(() => {
 
   // Définir la fonction de callback globale pour Google avec plus de logs
   window.handleSignInWithGoogle = async (response) => {
-    try {
-      loading.value = true
-      error.value = null
+  try {
+    loading.value = true
+    error.value = null
 
-      console.log('Google Sign-In Response received')
-      
-      if (!response?.credential) {
-        throw new Error('Aucun jeton d\'authentification reçu de Google')
-      }
+    console.log('Google Sign-In Response received')
 
-      const { data, error: signInError } = await $supabase.auth.signInWithIdToken({
-        provider: 'google',
-        token: response.credential,
-        nonce: nonce.value
-      })
-
-      if (signInError) {
-        console.error('Erreur Supabase:', signInError)
-        throw signInError
-      }
-
-      if (data?.user) {
-        console.log('Authentification réussie')
-        await router.push('/dashboard')
-      } else {
-        throw new Error('Aucune donnée utilisateur reçue')
-      }
-    } catch (e) {
-      console.error('Erreur détaillée:', e)
-      error.value = e.message || "Une erreur est survenue lors de la connexion avec Google"
-    } finally {
-      loading.value = false
+    if (!response?.credential) {
+      throw new Error('Aucun jeton d\'authentification reçu de Google')
     }
+
+    const { data, error: signInError } = await $supabase.auth.signInWithIdToken({
+      provider: 'google',
+      token: response.credential
+      // nonce: nonce.value ❌ Supprime cette ligne
+    })
+
+    if (signInError) {
+      console.error('Erreur Supabase:', signInError)
+      throw signInError
+    }
+
+    if (data?.user) {
+      console.log('Authentification réussie')
+      await router.push('/dashboard')
+    } else {
+      throw new Error('Aucune donnée utilisateur reçue')
+    }
+  } catch (e) {
+    console.error('Erreur détaillée:', e)
+    error.value = e.message || "Une erreur est survenue lors de la connexion avec Google"
+  } finally {
+    loading.value = false
   }
+}
+
 })
 </script>
 
