@@ -80,11 +80,11 @@
         </div>
         <div class="flex space-x-4">
           <div class="bg-gray-50 rounded-lg p-4 w-48 border border-gray-200">
-            <div class="text-gray-600 text-sm mb-1">Dépenses mensuelles</div>
+            <div class="text-gray-600 text-sm mb-1">Dépenses estimées</div>
             <div class="text-2xl font-bold text-gray-900">{{ filteredShares.reduce((sum, share) => sum + share.price, 0).toFixed(2) }} €</div>
           </div>
           <div class="bg-gray-50 rounded-lg p-4 w-48 border border-gray-200">
-            <div class="text-gray-600 text-sm mb-1">Économies</div>
+            <div class="text-gray-600 text-sm mb-1">Économies réalisées</div>
             <div class="text-2xl font-bold text-gray-900">
               {{ filteredShares.reduce((sum, share) => sum + (share.price - (share.price / (share.members.length + 1))), 0).toFixed(2) }} €
             </div>
@@ -237,15 +237,27 @@ const user = ref(null)
 const selectedApp = ref(null)
 const showNewShareModal = ref(false)
 const showUserMenu = ref(false)
+const applications = ref([])
 
-// Données de test pour les applications
-const applications = ref([
-  { id: 1, name: 'Netflix' },
-  { id: 2, name: 'Spotify' },
-  { id: 3, name: 'Disney+' },
-  { id: 4, name: 'Apple Music' },
-  { id: 5, name: 'Crunchyroll' }
-])
+// Charger les applications depuis Supabase
+const loadApplications = async () => {
+  try {
+    const { data, error } = await $supabase
+      .from('application')
+      .select('*')
+      .order('name')
+    
+    if (error) throw error
+    applications.value = data
+  } catch (error) {
+    console.error('Erreur lors du chargement des applications:', error)
+  }
+}
+
+// Charger les applications au montage du composant
+onMounted(() => {
+  loadApplications()
+})
 
 // Données de test pour les partages
 const shares = ref([
