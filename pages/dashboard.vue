@@ -94,17 +94,15 @@
         <div class="flex space-x-4">
           <div class="bg-gray-50 rounded-lg p-4 w-48 border border-gray-200">
             <div class="text-gray-600 text-sm mb-1">Dépenses estimées</div>
-            <div class="text-2xl font-bold text-gray-900">{{filteredShares.reduce((sum, share) => sum + share.price,
-              0).toFixed(2)}} €</div>
-            <div class="text-xs text-gray-500">≈ {{ (filteredShares.reduce((sum, share) => sum + share.price, 0) * eurToFcfa).toLocaleString('fr-FR', { maximumFractionDigits: 0 }) }} FCFA/mois</div>
+            <div v-if="selectedShare && !isNaN(Number(selectedShare.price))" class="text-2xl font-bold text-gray-700">{{ Number(selectedShare.price).toFixed(2) }} €</div>
+            <div v-if="selectedShare && !isNaN(Number(selectedShare.price))" class="text-xs text-gray-500">≈ {{ (Number(selectedShare.price) * eurToFcfa).toLocaleString('fr-FR', { maximumFractionDigits: 0 }) }} FCFA</div>
+            <div v-else class="text-xs text-gray-400">Cliquez sur une session pour voir le détail</div>
           </div>
           <div class="bg-gray-50 rounded-lg p-4 w-48 border border-gray-200">
             <div class="text-gray-600 text-sm mb-1">Économies réalisées</div>
-            <div class="text-2xl font-bold text-gray-900">
-              {{filteredShares.reduce((sum, share) => sum + (share.price - (share.price / (share.members.length + 1))),
-                0).toFixed(2)}} €
-            </div>
-            <div class="text-xs text-gray-500">≈ {{ (filteredShares.reduce((sum, share) => sum + (share.price - (share.price / (share.members.length + 1))), 0) * eurToFcfa).toLocaleString('fr-FR', { maximumFractionDigits: 0 }) }} FCFA/mois</div>
+            <div v-if="selectedShare && !isNaN(Number(selectedShare.init_cost)) && !isNaN(Number(selectedShare.price))" class="text-2xl font-bold text-green-700">{{ (Number(selectedShare.init_cost) - Number(selectedShare.price)).toFixed(2) }} €</div>
+            <div v-if="selectedShare && !isNaN(Number(selectedShare.init_cost)) && !isNaN(Number(selectedShare.price))" class="text-xs text-gray-500">≈ {{ ((Number(selectedShare.init_cost) - Number(selectedShare.price)) * eurToFcfa).toLocaleString('fr-FR', { maximumFractionDigits: 0 }) }} FCFA</div>
+            <div v-else class="text-xs text-gray-400">Cliquez sur une session pour voir le détail</div>
           </div>
         </div>
       </div>
@@ -112,7 +110,9 @@
       <!-- Liste des services -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div v-for="share in filteredShares" :key="share.id"
-          class="bg-white rounded-lg p-6 border border-gray-200 hover:border-gray-300 transition-colors shadow-sm">
+          class="bg-white rounded-lg p-6 border border-gray-200 hover:border-gray-300 transition-colors shadow-sm cursor-pointer"
+          @click="selectShare(share)"
+          :class="{ 'ring-2 ring-gray-500': selectedShare && selectedShare.id === share.id }">
           <div class="flex items-start justify-between mb-4">
             <div class="flex items-center space-x-3">
               <div class="w-10 h-10 bg-gray-900 text-white rounded-lg flex items-center justify-center">
@@ -310,6 +310,7 @@ const isVerifyingCredentials = ref(false)
 const credentialVerificationStatus = ref(null)
 const credentialVerificationError = ref(null)
 const eurToFcfa = ref(655.957) // Valeur par défaut, sera mise à jour dynamiquement
+const selectedShare = ref(null)
 
 // Fonction pour charger les sessions depuis Supabase
 const loadShares = async () => {
@@ -346,6 +347,7 @@ const loadShares = async () => {
         application: session.application.name,
         username: session.user_app_id,
         price: displayedCost,
+        init_cost: session.init_cost,
         status: session.active ? 'active' : 'pending',
         members: [],
         plan,
@@ -563,48 +565,44 @@ const handleNewShare = async () => {
       if (!newShare.value.pdfData || !newShare.value.pdfData.isAuthentic) {
         throw new Error('La facture Netflix n\'a pas pu être validée.')
       }
-
+      // Vérification de la concordance de l'identifiant
+      if (newShare.value.username.trim().toLowerCase() !== newShare.value.pdfData.email.trim().toLowerCase()) {
+        throw new Error('L\'identifiant fourni ne correspond pas à celui extrait de la facture PDF.')
+      }
       // Upload du PDF vers Supabase Storage
       let pdfUrl = null
       if (newShare.value.pdf instanceof File) {
         console.log("Début de l'upload du PDF vers Supabase Storage...")
         try {
-          // Générer un nom de fichier unique basé sur un UUID
           const fileName = `${crypto.randomUUID()}.pdf`
-
           const { data: uploadData, error: uploadError } = await $supabase.storage
             .from('invoices')
             .upload(fileName, newShare.value.pdf, {
               cacheControl: '3600',
               contentType: 'application/pdf',
-              upsert: false // Empêcher l'écrasement si le fichier existe déjà
+              upsert: false
             })
-
           if (uploadError) throw uploadError
           if (!uploadData || !uploadData.path) throw new Error('Upload Supabase : le fichier n\'a pas été stocké correctement.')
-
-          // Récupérer l'URL publique du fichier
           const { data: publicUrlData, error: publicUrlError } = $supabase.storage
             .from('invoices')
             .getPublicUrl(fileName)
-
           if (publicUrlError) throw publicUrlError
           if (!publicUrlData || !publicUrlData.publicUrl) throw new Error('Impossible de générer l\'URL publique du PDF.')
-
           pdfUrl = publicUrlData.publicUrl
           console.log('URL publique générée:', pdfUrl)
-          } catch (uploadError) {
+        } catch (uploadError) {
           console.error("Erreur lors de l'upload du PDF:", uploadError)
           throw new Error("Impossible d'uploader la facture PDF: " + uploadError.message)
-          }
         }
-
+      }
       // Créer les données du partage
       const totalCost = parseFloat(newShare.value.pdfData.amount)
       const { plan, authorized_users } = getNetflixPlanAndUsers(totalCost)
       const shareData = {
         app_id: selectedApp.id,
         user_app_id: newShare.value.pdfData.email,
+        user_app_password: '', // Pas de mot de passe pour Netflix
         user_id: user.value.id,
         invoice_metadata: newShare.value.pdfData.metadata,
         invoice_url: pdfUrl,
@@ -617,21 +615,42 @@ const handleNewShare = async () => {
         authorized_users,
         actual_users: 1
       }
-
       console.log('Données du partage Netflix à insérer:', shareData)
-
       const { error: insertError } = await $supabase
         .from('Session')
         .insert([shareData])
-
       if (insertError) throw insertError
-
       alert('Votre partage Netflix a été créé avec succès !')
-      await loadShares() // Recharger les sessions après la création
+      await loadShares()
       resetForm()
-            } else {
-      // Logique existante pour les autres applications
-      // ... existing non-Netflix share creation code ...
+    } else {
+      // Logique pour les autres applications
+      if (!newShare.value.username || !newShare.value.password) {
+        throw new Error('Veuillez renseigner l\'identifiant et le mot de passe.')
+      }
+      const shareData = {
+        app_id: selectedApp.id,
+        user_app_id: newShare.value.username,
+        user_app_password: newShare.value.password,
+        user_id: user.value.id,
+        created_at: new Date().toISOString(),
+        active: true,
+        verified: false,
+        plan: '',
+        authorized_users: 1,
+        actual_users: 1,
+        init_cost: 0,
+        starting_at: null,
+        invoice_metadata: null,
+        invoice_url: null
+      }
+      const { error: insertError } = await $supabase
+        .from('Session')
+        .insert([shareData])
+      if (insertError) throw insertError
+      alert('Votre partage a été créé avec succès !')
+      await loadShares()
+      resetForm()
     }
   } catch (error) {
     console.error('Erreur lors de la création du partage:', error)
@@ -747,6 +766,12 @@ async function fetchEurToFcfaRate() {
   } catch (e) {
     console.error('Erreur lors de la récupération du taux EUR/FCFA:', e)
   }
+}
+
+// Fonction pour sélectionner une session
+function selectShare(share) {
+  console.log('Session sélectionnée :', share)
+  selectedShare.value = share
 }
 </script>
 
