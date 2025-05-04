@@ -275,6 +275,94 @@
       </div>
     </div>
   </div>
+
+  <!-- Modal Souscription -->
+  <div v-if="showSubscribeModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
+    <div class="bg-white rounded-xl shadow-2xl w-full max-w-lg p-6 relative transform transition-all duration-300">
+      <!-- Bouton de fermeture -->
+      <button @click="closeSubscribeModal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
+      <!-- En-tête de la modale -->
+      <div class="flex items-center space-x-4 mb-6">
+        <div class="w-12 h-12 bg-gray-900 text-white rounded-lg flex items-center justify-center">
+          <span class="text-xl font-bold">{{ subscribeSession?.application?.charAt(0) }}</span>
+        </div>
+        <div>
+          <h2 class="text-2xl font-bold text-gray-900">{{ subscribeSession?.application }}</h2>
+          <p class="text-sm text-gray-500">{{ subscribeSession?.plan }}</p>
+        </div>
+      </div>
+
+      <!-- Détails de la session -->
+      <div v-if="subscribeSession" class="space-y-4 mb-6">
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <p class="text-sm text-gray-500 mb-1">Prix mensuel</p>
+            <p class="text-xl font-bold text-gray-900">{{ subscribeSession.price }} €</p>
+            <p class="text-xs text-gray-500">≈ {{ (subscribeSession.price * eurToFcfa).toLocaleString('fr-FR', { maximumFractionDigits: 0 }) }} FCFA</p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <p class="text-sm text-gray-500 mb-1">Économies</p>
+            <p class="text-xl font-bold text-green-600">{{ (subscribeSession.init_cost - subscribeSession.price).toFixed(2) }} €</p>
+            <p class="text-xs text-gray-500">≈ {{ ((subscribeSession.init_cost - subscribeSession.price) * eurToFcfa).toLocaleString('fr-FR', { maximumFractionDigits: 0 }) }} FCFA</p>
+          </div>
+        </div>
+
+        <div class="bg-gray-50 p-4 rounded-lg">
+          <p class="text-sm text-gray-500 mb-2">Détails du compte</p>
+          <div class="space-y-2">
+            <div class="flex justify-between">
+              <span class="text-gray-600">Utilisateurs autorisés</span>
+              <span class="text-gray-900">{{ subscribeSession.actual_users }} / {{ subscribeSession.authorized_users }}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600">Statut</span>
+              <span :class="subscribeSession.status === 'active' ? 'text-green-600' : 'text-red-600'" class="font-medium">
+                {{ subscribeSession.status === 'active' ? 'Actif' : 'Inactif' }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Options de paiement -->
+      <div v-if="!showPaymentOptions" class="mt-6">
+        <button @click="showPaymentOptions = true" 
+          class="w-full bg-gray-900 text-white py-3 rounded-lg hover:bg-gray-800 transition-colors font-medium">
+          Souscrire maintenant
+        </button>
+      </div>
+      <div v-else class="mt-6 space-y-4">
+        <h3 class="text-lg font-semibold text-gray-900">Choisissez votre mode de paiement</h3>
+        <div class="space-y-3">
+          <button 
+            @click="checkout"
+            :disabled="isProcessingPayment"
+            class="w-full flex items-center justify-center space-x-2 bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <svg v-if="isProcessingPayment" class="animate-spin -ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <svg v-else class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>{{ isProcessingPayment ? 'Traitement en cours...' : 'Payer avec Mobile Money' }}</span>
+          </button>
+        </div>
+        <div v-if="paymentError" class="text-sm text-red-600 text-center mt-2">
+          {{ paymentError }}
+        </div>
+        <p class="text-xs text-gray-500 text-center mt-2">
+          Paiement sécurisé via CinetPay • Aucune donnée bancaire n'est stockée
+        </p>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -310,6 +398,24 @@ const credentialVerificationError = ref(null)
 const eurToFcfa = ref(655.957) // Valeur par défaut, sera mise à jour dynamiquement
 const selectedShare = ref(null)
 const identifiantError = ref('')
+const showSubscribeModal = ref(false)
+const subscribeSession = ref(null)
+const showPaymentOptions = ref(false)
+const isProcessingPayment = ref(false)
+const paymentError = ref(null)
+
+// Configuration de CinetPay via les variables d'environnement
+const config = useRuntimeConfig()
+const CINETPAY_API_KEY = config.public.cinetpayApiKey
+const CINETPAY_SITE_ID = config.public.cinetpaySiteId
+
+// Log pour vérifier les variables d'environnement
+onMounted(() => {
+  console.log('CinetPay Config:', {
+    apiKey: CINETPAY_API_KEY,
+    siteId: CINETPAY_SITE_ID
+  })
+})
 
 // Fonction pour charger les sessions depuis Supabase
 const loadShares = async () => {
@@ -665,14 +771,14 @@ const formatDateForDB = (dateStr) => {
   return `${fullYear}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
 }
 
-// Fonction pour vérifier si la date est récente (moins de 20 jours)
+// Fonction pour vérifier si la date est récente (moins de 5 jours)
 const isRecentDate = (dateStr) => {
   if (!dateStr) return false
   const [day, month, year] = dateStr.split('/')
   const invoiceDate = new Date(2000 + parseInt(year), parseInt(month) - 1, parseInt(day))
-  const twentyDaysAgo = new Date()
-  twentyDaysAgo.setDate(twentyDaysAgo.getDate() - 20)
-  return invoiceDate >= twentyDaysAgo
+  const FiveDaysAgo = new Date()
+  FiveDaysAgo.setDate(FiveDaysAgo.getDate() - 5)
+  return invoiceDate >= FiveDaysAgo
 }
 
 // Fonction pour réinitialiser le formulaire
@@ -768,8 +874,142 @@ async function fetchEurToFcfaRate() {
 
 // Fonction pour sélectionner une session
 function selectShare(share) {
-  console.log('Session sélectionnée :', share)
   selectedShare.value = share
+  subscribeSession.value = share
+  showSubscribeModal.value = true
+}
+
+// Fonction pour fermer la modale de souscription
+function closeSubscribeModal() {
+  showSubscribeModal.value = false
+  showPaymentOptions.value = false
+  subscribeSession.value = null
+}
+
+// Fonction pour initier le paiement CinetPay
+async function initiateCinetPayPayment() {
+  try {
+    isProcessingPayment.value = true
+    paymentError.value = null
+
+    // Vérifier que les clés sont présentes
+    if (!CINETPAY_API_KEY || !CINETPAY_SITE_ID) {
+      throw new Error('Configuration CinetPay manquante. Veuillez vérifier les variables d\'environnement.')
+    }
+
+    let amountInFcfa = Math.round(subscribeSession.value.price * eurToFcfa.value)
+    amountInFcfa = Math.round(amountInFcfa / 5) * 5 // Multiple de 5
+
+    // const currentUrl = window.location.href; // Capture l'URL avant redirection
+    const transactionId = Math.floor(Math.random() * 100000000).toString()
+
+    const paymentData = {
+      apikey: CINETPAY_API_KEY,
+      site_id: CINETPAY_SITE_ID,
+      transaction_id: transactionId,
+      amount: amountInFcfa,
+      currency: "XAF",
+      description: `Abonnement ${subscribeSession.value.application} - ${subscribeSession.value.plan}`,
+      customer_id: user.value.id,
+      customer_name: user.value.user_metadata?.name || user.value.email.split('@')[0],
+      customer_surname: user.value.user_metadata?.surname || '',
+      customer_email: user.value.email,
+      customer_phone_number: "+237652589508",
+      lock_phone_number: true,
+      notify_url: "https://katika-kappa.vercel.app/dashboard",
+      return_url: "https://katika-kappa.vercel.app/dashboard",
+      channels: "MOBILE_MONEY",
+      lang: "FR",
+      metadata: JSON.stringify({
+        session_id: subscribeSession.value.id,
+        user_id: user.value.id
+      })
+    }
+
+    const response = await fetch('https://api-checkout.cinetpay.com/v2/payment', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(paymentData)
+    })
+
+    const data = await response.json()
+
+    if (data.code === '201') {
+      // Créer l'entité Subscription
+      // const { error: subscriptionError } = await $supabase
+      //   .from('Subscription')
+      //   .insert([{
+      //     cost: subscribeSession.value.price,
+      //     cancelled_on: subscribeSession.value.cancelled_on,
+      //     session_id: subscribeSession.value.id,
+      //     user_id: user.value.id,
+      //     active: true // ou false selon la logique métier
+      //   }]);
+      // if (subscriptionError) {
+      //   alert("Le paiement a été initié mais l'enregistrement de la souscription a échoué.");
+      // } else {
+      //   alert("Paiement initié avec succès ! Votre souscription a été enregistrée.");
+      // }
+      // Rediriger vers la page de paiement CinetPay
+      window.location.href = data.data.payment_url;
+    } else {
+      throw new Error(data.message || 'Erreur lors de l\'initialisation du paiement')
+    }
+  } catch (error) {
+    console.error('Erreur de paiement:', error)
+    paymentError.value = error.message
+  } finally {
+    isProcessingPayment.value = false
+  }
+}
+
+// Ajout de la fonction checkout pour Seamless
+const checkout = () => {
+  const currentUrl = window.location.href; // Capture l'URL courante avant le paiement
+  if (!window.CinetPay) {
+    alert("CinetPay SDK non chargé !");
+    return;
+  }
+  window.CinetPay.setConfig({
+    apikey: CINETPAY_API_KEY,
+    site_id: CINETPAY_SITE_ID,
+    notify_url: currentUrl,
+    mode: "PRODUCTION"
+  });
+  // Montant arrondi au multiple de 5
+  let amountInFcfa = Math.round(subscribeSession.value.price * eurToFcfa.value)
+  amountInFcfa = Math.round(amountInFcfa / 5) * 5;
+  window.CinetPay.getCheckout({
+    transaction_id: Math.floor(Math.random() * 100000000).toString(),
+    amount: amountInFcfa,
+    currency: "XAF",
+    channels: "MOBILE_MONEY",
+    description: `Abonnement ${subscribeSession.value.application} - ${subscribeSession.value.plan}`,
+    customer_name: user.value.user_metadata?.name || user.value.email.split('@')[0],
+    customer_surname: user.value.user_metadata?.surname || '',
+    customer_email: user.value.email,
+    customer_phone_number: "+237652589508",
+    customer_address: "Yaoundé",
+    customer_city: "Yaoundé",
+    customer_country: "CM",
+    customer_state: "CM",
+    customer_zip_code: "00000"
+  });
+  window.CinetPay.waitResponse(function(data) {
+    if (data.status == "REFUSED") {
+      alert("Votre paiement a échoué");
+      window.location.reload();
+    } else if (data.status == "ACCEPTED") {
+      alert("Votre paiement a été effectué avec succès");
+      window.location.reload();
+    }
+  });
+  window.CinetPay.onError(function(data) {
+    console.log("Erreur CinetPay:", data);
+    alert("Erreur lors du paiement");
+  });
 }
 </script>
 
