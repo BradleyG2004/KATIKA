@@ -36,12 +36,12 @@ export default {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: #e0e0e0;
+  background-color: #346731;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 600;
-  color: #666;
+  color: #ffffff;
 }
 
 .avatar.has-image {
