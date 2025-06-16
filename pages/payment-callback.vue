@@ -85,15 +85,16 @@ const verifyPayment = async (reference) => {
     const data = await response.json()
 
     if (data.transaction.status === 'complete') {
-      // Mettre à jour le statut de la souscription dans Supabase
-      const { error: updateError } = await $supabase
-        .from('Subscription')
-        .update({ active: true })
-        .eq('reference', reference)
+    //   // Mettre à jour le statut de la souscription dans Supabase
+    //   const { error: updateError } = await $supabase
+    //     .from('Subscription')
+    //     .update({ active: true })
+    //     .eq('reference', reference)
 
-      if (updateError) {
-        throw new Error('Erreur lors de la mise à jour de la souscription')
-      }
+    //   if (updateError) {
+    //     throw new Error('Erreur lors de la mise à jour de la souscription')
+    //   }
+    alert("Success")
     } else if (data.transaction.status === 'pending') {
       // Si le paiement est en attente, on attend un peu et on réessaie
       await new Promise(resolve => setTimeout(resolve, 2000))

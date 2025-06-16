@@ -122,12 +122,11 @@
               class="bg-white rounded-lg p-6 border border-gray-100 hover:border-gray-300 transition-colors shadow-sm">
               <div class="flex items-start justify-between mb-2">
                 <div>
-                  <h3 class="font-medium text-gray-900">Session #{{ sub.session_id }}</h3>
+                  <h3 class="font-medium text-gray-900">{{ sub.session?.application?.name || 'Application inconnue' }}</h3>
                   <p class="text-sm text-gray-600">Coût : {{ sub.cost }} €</p>
                   <p class="text-xs text-gray-500">Créée le : {{ new Date(sub.created_at).toLocaleDateString() }}</p>
                   <p class="text-xs" :class="sub.active ? 'text-green-600' : 'text-red-600'">{{ sub.active ? 'Active' : 'Inactive' }}</p>
                 </div>
-                <div class="text-xs text-gray-500">ID: {{ sub.id }}</div>
               </div>
             </div>
             <div v-if="filteredSubscriptions.length === 0" class="text-center py-12">
@@ -229,7 +228,14 @@ const loadSubscriptions = async () => {
   try {
     const { data, error } = await $supabase
       .from('Subscription')
-      .select('*')
+      .select(`
+        *,
+        session:session_id (
+          application:app_id (
+            name
+          )
+        )
+      `)
       .eq('user_id', user.value.id)
       .order('created_at', { ascending: false })
     if (error) throw error
