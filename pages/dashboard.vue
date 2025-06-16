@@ -59,48 +59,48 @@
           <div class="border border-gray-200 rounded-lg overflow-hidden">
             <div class="flex">
               <!-- Bouton "Tous" fixe -->
-              <button 
+            <button 
                 class="px-4 py-2 rounded-lg text-sm transition-colors whitespace-nowrap border-r border-gray-200"
-                @click="selectedApp = null"
-                :class="{ 'bg-gray-900 text-white': selectedApp === null, 'bg-gray-100 text-gray-600 hover:bg-gray-200': selectedApp !== null }"
-              >
+              @click="selectedApp = null"
+              :class="{ 'bg-gray-900 text-white': selectedApp === null, 'bg-gray-100 text-gray-600 hover:bg-gray-200': selectedApp !== null }"
+            >
               Tous ({{ totalShares }})
             </button>
 
-              <!-- Zone de défilement pour les applications -->
+            <!-- Zone de défilement pour les applications -->
               <div class="overflow-x-auto scrollbar-hide">
-                <div class="flex p-2 min-w-max">
-                  <button 
-                    v-for="app in applications" 
-                    :key="app.id" 
-                    @click="selectedApp = app.name"
-                    class="px-4 py-2 rounded-lg text-sm transition-colors whitespace-nowrap mr-2 last:mr-0"
-                    :class="{ 'bg-gray-900 text-white': selectedApp === app.name, 'bg-gray-100 text-gray-600 hover:bg-gray-200': selectedApp !== app.name }"
-                  >
-              {{ app.name }} ({{ getShareCountByApp(app.name) }})
-            </button>
+              <div class="flex p-2 min-w-max">
+                <button 
+                  v-for="app in applications" 
+                  :key="app.id" 
+                  @click="selectedApp = app.name"
+                  class="px-4 py-2 rounded-lg text-sm transition-colors whitespace-nowrap mr-2 last:mr-0"
+                  :class="{ 'bg-gray-900 text-white': selectedApp === app.name, 'bg-gray-100 text-gray-600 hover:bg-gray-200': selectedApp !== app.name }"
+                >
+                  {{ app.name }} ({{ getShareCountByApp(app.name) }})
+                </button>
                 </div>
               </div>
             </div>
-          </div>
-          <!-- Indicateur de défilement -->
-          <div class="flex items-center justify-end mt-2 text-xs text-gray-500">
-            <svg class="w-4 h-4 mr-1 motion-safe:animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-            <span>Faites défiler pour voir plus d'applications</span>
-          </div>
-        </div>
+              </div>
+              <!-- Indicateur de défilement -->
+              <div class="flex items-center justify-end mt-2 text-xs text-gray-500">
+                <svg class="w-4 h-4 mr-1 motion-safe:animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+                <span>Faites défiler pour voir plus d'applications</span>
+              </div>
+            </div>
         <div class="flex space-x-4">
-          <div class="bg-gray-50 rounded-lg p-4 w-48 border border-gray-200">
-            <div class="text-gray-600 text-sm mb-1">Dépenses estimées</div>
-            <div v-if="selectedShare && !isNaN(Number(selectedShare.price))" class="text-2xl font-bold text-gray-700">{{ Number(selectedShare.price).toFixed(2) }} €</div>
-            <div v-if="selectedShare && !isNaN(Number(selectedShare.price))" class="text-xs text-gray-500">≈ {{ (Number(selectedShare.price) * eurToFcfa).toLocaleString('fr-FR', { maximumFractionDigits: 0 }) }} FCFA</div>
-            <div v-else class="text-xs text-gray-400">Cliquez sur une session pour voir le détail</div>
-          </div>
-          <div class="bg-gray-50 rounded-lg p-4 w-48 border border-gray-200">
-            <div class="text-gray-600 text-sm mb-1">Économies réalisées</div>
-            <div v-if="selectedShare && !isNaN(Number(selectedShare.init_cost)) && !isNaN(Number(selectedShare.price))" class="text-2xl font-bold text-green-700">{{ (Number(selectedShare.init_cost) - Number(selectedShare.price)).toFixed(2) }} €</div>
+            <div class="bg-gray-50 rounded-lg p-4 w-48 border border-gray-200">
+              <div class="text-gray-600 text-sm mb-1">Dépenses estimées</div>
+              <div v-if="selectedShare && !isNaN(Number(selectedShare.price))" class="text-2xl font-bold text-gray-700">{{ Number(selectedShare.price).toFixed(2) }} €</div>
+              <div v-if="selectedShare && !isNaN(Number(selectedShare.price))" class="text-xs text-gray-500">≈ {{ (Number(selectedShare.price) * eurToFcfa).toLocaleString('fr-FR', { maximumFractionDigits: 0 }) }} FCFA</div>
+              <div v-else class="text-xs text-gray-400">Cliquez sur une session pour voir le détail</div>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-4 w-48 border border-gray-200">
+              <div class="text-gray-600 text-sm mb-1">Économies réalisées</div>
+              <div v-if="selectedShare && !isNaN(Number(selectedShare.init_cost)) && !isNaN(Number(selectedShare.price))" class="text-2xl font-bold text-green-700">{{ (Number(selectedShare.init_cost) - Number(selectedShare.price)).toFixed(2) }} €</div>
             <div v-if="selectedShare && !isNaN(Number(selectedShare.init_cost)) && !isNaN(Number(selectedShare.price))" class="text-xs text-gray-500">≈ {{ ((Number(selectedShare.init_cost) - Number(selectedShare.price)) * eurToFcfa).toLocaleString('fr-FR', { maximumFractionDigits: 0 }) }} FCFA</div>
             <div v-else class="text-xs text-gray-400">Cliquez sur une session pour voir le détail</div>
           </div>
@@ -124,8 +124,8 @@
               </div>
             </div>
             <div class="flex flex-col items-end space-y-2">
-            <div :class="share.status === 'active' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-600'"
-              class="text-xs px-2 py-1 rounded">
+              <div :class="share.status === 'active' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-600'"
+                class="text-xs px-2 py-1 rounded">
                 {{ share.status === 'active' ? 'Actif' : 'Inactif' }}
               </div>
               <div class="flex items-center space-x-1 text-xs text-gray-500">
@@ -146,7 +146,7 @@
             <div class="text-right">
               <div class="font-medium">{{ share.price }}€/mois</div>
               <div class="text-xs text-gray-500">≈ {{ (share.price * eurToFcfa).toLocaleString('fr-FR', { maximumFractionDigits: 0 }) }} FCFA/mois</div>
-          </div>
+            </div>
           </div>
         </div>
       </div>
@@ -340,7 +340,7 @@
         <h3 class="text-lg font-semibold text-gray-900">Choisissez votre mode de paiement</h3>
         <div class="space-y-3">
           <button 
-            @click="checkout"
+            @click="handleNotchPayPayment"
             :disabled="isProcessingPayment"
             class="w-full flex items-center justify-center space-x-2 bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
@@ -351,14 +351,14 @@
             <svg v-else class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <span>{{ isProcessingPayment ? 'Traitement en cours...' : 'Payer avec Mobile Money' }}</span>
+            <span>{{ isProcessingPayment ? 'Traitement en cours...' : 'Payer avec Notch Pay' }}</span>
           </button>
         </div>
         <div v-if="paymentError" class="text-sm text-red-600 text-center mt-2">
           {{ paymentError }}
         </div>
         <p class="text-xs text-gray-500 text-center mt-2">
-          Paiement sécurisé via CinetPay • Aucune donnée bancaire n'est stockée
+          Paiement sécurisé via Notch Pay • Aucune donnée bancaire n'est stockée
         </p>
       </div>
     </div>
@@ -404,18 +404,16 @@ const showPaymentOptions = ref(false)
 const isProcessingPayment = ref(false)
 const paymentError = ref(null)
 
-// Configuration de CinetPay via les variables d'environnement
+// Configuration de NotchPay via les variables d'environnement
 const config = useRuntimeConfig()
-const CINETPAY_API_KEY = config.public.cinetpayApiKey
-const CINETPAY_SITE_ID = config.public.cinetpaySiteId
+const NOTCHPAY_API_KEY = config.public.notchApiKey
 
 // Log pour vérifier les variables d'environnement
-onMounted(() => {
-  console.log('CinetPay Config:', {
-    apiKey: CINETPAY_API_KEY,
-    siteId: CINETPAY_SITE_ID
-  })
-})
+// onMounted(() => {
+//   console.log('NotchPay Config:', {
+//     apiKey: NOTCHPAY_API_KEY
+//   })
+// })
 
 // Fonction pour charger les sessions depuis Supabase
 const loadShares = async () => {
@@ -715,11 +713,11 @@ const handleNewShare = async () => {
 
           pdfUrl = publicUrlData.publicUrl
           console.log('URL publique générée:', pdfUrl)
-          } catch (uploadError) {
+        } catch (uploadError) {
           console.error("Erreur lors de l'upload du PDF:", uploadError)
           throw new Error("Impossible d'uploader la facture PDF: " + uploadError.message)
-          }
         }
+      }
 
       // Créer les données du partage
       const totalCost = parseFloat(newShare.value.pdfData.amount)
@@ -783,14 +781,14 @@ const isRecentDate = (dateStr) => {
 
 // Fonction pour réinitialiser le formulaire
 const resetForm = () => {
-        newShare.value = {
-          application: '',
-          username: '',
-          password: '',
-          pdf: null,
+  newShare.value = {
+    application: '',
+    username: '',
+    password: '',
+    pdf: null,
           pdfData: null
-        }
-        showNewShareModal.value = false
+  }
+  showNewShareModal.value = false
 }
 
 // Se déconnecter
@@ -886,130 +884,72 @@ function closeSubscribeModal() {
   subscribeSession.value = null
 }
 
-// Fonction pour initier le paiement CinetPay
-async function initiateCinetPayPayment() {
+// Fonction pour gérer le paiement Notch Pay
+async function handleNotchPayPayment() {
   try {
     isProcessingPayment.value = true
     paymentError.value = null
 
-    // Vérifier que les clés sont présentes
-    if (!CINETPAY_API_KEY || !CINETPAY_SITE_ID) {
-      throw new Error('Configuration CinetPay manquante. Veuillez vérifier les variables d\'environnement.')
+    // Vérifier que la clé API est présente
+    if (!NOTCHPAY_API_KEY) {
+      throw new Error('Configuration NotchPay manquante. Veuillez vérifier les variables d\'environnement.')
     }
 
-    let amountInFcfa = Math.round(subscribeSession.value.price * eurToFcfa.value)
-    amountInFcfa = Math.round(amountInFcfa / 5) * 5 // Multiple de 5
+    const amountInCentimes = Math.round(subscribeSession.value.price * 100) // Convertir en centimes
+    const reference = `ref_${crypto.randomUUID()}`
 
-    // const currentUrl = window.location.href; // Capture l'URL avant redirection
-    const transactionId = Math.floor(Math.random() * 100000000).toString()
-
-    const paymentData = {
-      apikey: CINETPAY_API_KEY,
-      site_id: CINETPAY_SITE_ID,
-      transaction_id: transactionId,
-      amount: amountInFcfa,
-      currency: "XAF",
-      description: `Abonnement ${subscribeSession.value.application} - ${subscribeSession.value.plan}`,
-      customer_id: user.value.id,
-      customer_name: user.value.user_metadata?.name || user.value.email.split('@')[0],
-      customer_surname: user.value.user_metadata?.surname || '',
-      customer_email: user.value.email,
-      customer_phone_number: "+237652589508",
-      lock_phone_number: true,
-      notify_url: "https://katika-kappa.vercel.app/dashboard",
-      return_url: "https://katika-kappa.vercel.app/dashboard",
-      channels: "MOBILE_MONEY",
-      lang: "FR",
-      metadata: JSON.stringify({
-        session_id: subscribeSession.value.id,
-        user_id: user.value.id
-      })
-    }
-
-    const response = await fetch('https://api-checkout.cinetpay.com/v2/payment', {
+    const response = await fetch('https://api.notchpay.co/payments', {
       method: 'POST',
       headers: {
+        'Authorization': NOTCHPAY_API_KEY,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(paymentData)
+      body: JSON.stringify({
+        amount: amountInCentimes,
+        currency: 'XAF',
+        customer: {
+          name: user.value.user_metadata?.name || user.value.email.split('@')[0],
+          email: user.value.email,
+          phone: '+237652589508' // À remplacer par le numéro réel de l'utilisateur
+        },
+        description: `Abonnement ${subscribeSession.value.application} - ${subscribeSession.value.plan}`,
+        callback: `${window.location.protocol}//${window.location.host}/payment-callback`,
+        reference
+      })
     })
 
-    const data = await response.json()
-
-    if (data.code === '201') {
-      // Créer l'entité Subscription
-      // const { error: subscriptionError } = await $supabase
-      //   .from('Subscription')
-      //   .insert([{
-      //     cost: subscribeSession.value.price,
-      //     cancelled_on: subscribeSession.value.cancelled_on,
-      //     session_id: subscribeSession.value.id,
-      //     user_id: user.value.id,
-      //     active: true // ou false selon la logique métier
-      //   }]);
-      // if (subscriptionError) {
-      //   alert("Le paiement a été initié mais l'enregistrement de la souscription a échoué.");
-      // } else {
-      //   alert("Paiement initié avec succès ! Votre souscription a été enregistrée.");
-      // }
-      // Rediriger vers la page de paiement CinetPay
-      window.location.href = data.data.payment_url;
-    } else {
-      throw new Error(data.message || 'Erreur lors de l\'initialisation du paiement')
+    if (!response.ok) {
+      const errorData = await response.json()
+      throw new Error(errorData.message || 'Erreur lors de la création du paiement')
     }
+
+    const data = await response.json()
+    
+    // Créer l'entité Subscription dans Supabase
+    const { error: subscriptionError } = await $supabase
+      .from('Subscription')
+      .insert([{
+        cost: subscribeSession.value.price,
+        session_id: subscribeSession.value.id,
+        user_id: user.value.id,
+        active: false, // Le statut sera mis à jour après le callback
+        reference
+      }])
+
+    if (subscriptionError) {
+      console.error('Erreur lors de la création de la souscription:', subscriptionError)
+      throw new Error('Erreur lors de la création de la souscription')
+    }
+
+    // Rediriger vers la page de paiement Notch Pay
+    window.location.href = data.authorization_url
+
   } catch (error) {
-    console.error('Erreur de paiement:', error)
-    paymentError.value = error.message
+    console.error('Erreur lors du traitement du paiement:', error)
+    paymentError.value = error.message || 'Une erreur est survenue lors du traitement du paiement'
   } finally {
     isProcessingPayment.value = false
   }
-}
-
-// Ajout de la fonction checkout pour Seamless
-const checkout = () => {
-  const currentUrl = window.location.href; // Capture l'URL courante avant le paiement
-  if (!window.CinetPay) {
-    alert("CinetPay SDK non chargé !");
-    return;
-  }
-  window.CinetPay.setConfig({
-    apikey: CINETPAY_API_KEY,
-    site_id: CINETPAY_SITE_ID,
-    notify_url: currentUrl,
-    mode: "PRODUCTION"
-  });
-  // Montant arrondi au multiple de 5
-  let amountInFcfa = Math.round(subscribeSession.value.price * eurToFcfa.value)
-  amountInFcfa = Math.round(amountInFcfa / 5) * 5;
-  window.CinetPay.getCheckout({
-    transaction_id: Math.floor(Math.random() * 100000000).toString(),
-    amount: amountInFcfa,
-    currency: "XAF",
-    channels: "MOBILE_MONEY",
-    description: `Abonnement ${subscribeSession.value.application} - ${subscribeSession.value.plan}`,
-    customer_name: user.value.user_metadata?.name || user.value.email.split('@')[0],
-    customer_surname: user.value.user_metadata?.surname || '',
-    customer_email: user.value.email,
-    customer_phone_number: "+237652589508",
-    customer_address: "Yaoundé",
-    customer_city: "Yaoundé",
-    customer_country: "CM",
-    customer_state: "CM",
-    customer_zip_code: "00000"
-  });
-  window.CinetPay.waitResponse(function(data) {
-    if (data.status == "REFUSED") {
-      alert("Votre paiement a échoué");
-      window.location.reload();
-    } else if (data.status == "ACCEPTED") {
-      alert("Votre paiement a été effectué avec succès");
-      window.location.reload();
-    }
-  });
-  window.CinetPay.onError(function(data) {
-    console.log("Erreur CinetPay:", data);
-    alert("Erreur lors du paiement");
-  });
 }
 </script>
 

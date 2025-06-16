@@ -1,24 +1,27 @@
 <template>
   <div>
-    <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="min-h-screen flex items-center justify-center bg-white py-12 px-4 sm:px-6 lg:px-8">
       <div class="max-w-md w-full space-y-8">
-        <div>
-          <NuxtLink to="/" class="flex items-center justify-center mb-8">
-            <img class="h-6 w-auto" src="../public/image/logo.svg" alt="KATIKA" />
+        <!-- Logo -->
+        <div class="flex justify-center">
+          <NuxtLink to="/">
+            <img src="/image/logo.svg" alt="KATIKA" class="h-12 w-auto" />
           </NuxtLink>
-          <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Créer un nouveau compte
-          </h2>
-          <p class="mt-2 text-center text-sm text-gray-600">
+        </div>
+
+        <!-- Titre -->
+        <div class="text-center">
+          <h2 class="text-3xl font-bold text-gray-900">Créer un nouveau compte</h2>
+          <p class="mt-2 text-sm text-gray-600">
             Ou
-            <NuxtLink to="/login" class="font-medium text-indigo-600 hover:text-indigo-500">
+            <NuxtLink to="/login" class="font-medium text-gray-900 hover:underline">
               connectez-vous à votre compte
             </NuxtLink>
           </p>
         </div>
 
         <!-- Message d'erreur -->
-        <div v-if="error" class="rounded-md bg-red-50 p-4">
+        <div v-if="error" class="rounded-md bg-red-50 p-4 mb-4">
           <div class="flex">
             <div class="flex-shrink-0">
               <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
@@ -62,35 +65,45 @@
           <div class="rounded-md shadow-sm -space-y-px">
             <div>
               <label for="email" class="sr-only">Email</label>
-              <input id="email" v-model="email" name="email" type="email" required
-                class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Adresse email" />
+              <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              v-model="email"
+              class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-gray-500 focus:border-gray-500 focus:z-10 sm:text-sm"
+              placeholder="Adresse email"
+            />
             </div>
             <div>
               <label for="password" class="sr-only">Mot de passe</label>
-              <input id="password" v-model="password" name="password" type="password" required
-                class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Mot de passe" />
+              <input
+              id="password"
+              name="password"
+              type="password"
+              required
+              v-model="password"
+              class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-gray-500 focus:border-gray-500 focus:z-10 sm:text-sm"
+              placeholder="Mot de passe"
+            />
             </div>
             <div>
               <label for="confirm-password" class="sr-only">Confirmer le mot de passe</label>
-              <input id="confirm-password" v-model="confirmPassword" name="confirm-password" type="password" required
-                class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Confirmer le mot de passe" />
+              <input
+              id="confirm-password"
+              name="confirm-password"
+              type="password"
+              required
+              v-model="confirmPassword"
+              class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-gray-500 focus:border-gray-500 focus:z-10 sm:text-sm"
+              placeholder="Confirm password"
+            />
             </div>
           </div>
 
           <div>
             <button type="submit" :disabled="loading"
-              class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed">
-              <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-                <svg class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                  <path fill-rule="evenodd"
-                    d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                    clip-rule="evenodd" />
-                </svg>
-              </span>
+              class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-900 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 disabled:opacity-50 disabled:cursor-not-allowed">
               {{ loading ? 'Inscription en cours...' : 'S\'inscrire' }}
             </button>
           </div>

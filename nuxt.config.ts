@@ -14,19 +14,14 @@ export default defineNuxtConfig({
       supabaseUrl: process.env.NUXT_PUBLIC_SUPABASE_URL,
       supabaseKey: process.env.NUXT_PUBLIC_SUPABASE_KEY,
       googleClientId: process.env.GOOGLE_CLIENT_ID,
-      cinetpayApiKey: process.env.CINETPAY_API_KEY,
-      cinetpaySiteId: process.env.CINETPAY_SITE_ID
+      encryptionKey: process.env.NUXT_PUBLIC_ENCRYPTION_KEY,
+      notchApiKey: process.env.NUXT_PUBLIC_NOTCH_API_KEY
     }
   },
   app: {
     head: {
-      script: [
-        { src: "https://cdn.cinetpay.com/seamless/main.js" }
-      ],
-      meta: [
-        { 'http-equiv': 'Cross-Origin-Opener-Policy', content: 'same-origin' },
-        { 'http-equiv': 'Cross-Origin-Embedder-Policy', content: 'require-corp' }
-      ]
+      script: [],
+      meta: []
     }
   }
 });
