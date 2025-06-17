@@ -900,7 +900,8 @@ async function handleNotchPayPayment() {
       throw new Error('Configuration NotchPay manquante. Veuillez vérifier les variables d\'environnement.')
     }
 
-    const amountInCentimes = Math.round(subscribeSession.value.price * 100) // Convertir en centimes
+    // Calculer le montant en FCFA
+    const amountInFcfa = Math.round(subscribeSession.value.price * eurToFcfa.value)
     const reference = `ref_${crypto.randomUUID()}`
 
     const response = await fetch('https://api.notchpay.co/payments', {
@@ -910,7 +911,7 @@ async function handleNotchPayPayment() {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        amount: amountInCentimes,
+        amount: amountInFcfa,
         currency: 'XAF',
         customer: {
           name: user.value.user_metadata?.name || user.value.email.split('@')[0],

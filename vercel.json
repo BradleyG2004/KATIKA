@@ -1,6 +1,6 @@
 {
     "crons": [{
       "path": "/server/api/node-cron.js",
-      "schedule": "0 1 * * *"
+      "schedule": "* * * * *"
     }]
   }

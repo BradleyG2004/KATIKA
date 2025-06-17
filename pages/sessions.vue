@@ -78,6 +78,14 @@
                     {{ session.price }}€/mois
                     <div class="text-xs text-gray-500">≈ {{ (session.price * eurToFcfa).toLocaleString('fr-FR', { maximumFractionDigits: 0 }) }} FCFA/mois</div>
                   </div>
+                  <!-- <div class="text-sm text-gray-600">
+                    <span class="font-medium">Utilisateurs actuels :</span>
+                    {{ session.actual_users || 1 }}/{{ session.authorized_users }}
+                  </div> -->
+                  <div class="text-sm text-gray-600">
+                    <span class="font-medium">Utilisateurs actuels :</span>
+                    {{ (session.actual_users || 1) - 1 }}
+                  </div>
                 </div>
                 <div class="space-y-2">
                   <div class="text-sm text-gray-600">
@@ -88,6 +96,15 @@
                     <span class="font-medium">Vérifié :</span>
                     {{ session.verified ? 'Oui' : 'Non' }}
                   </div>
+                  <div class="text-sm text-gray-600">
+                    <span class="font-medium">Coût total :</span>
+                    {{ session.price }}€/mois
+                  </div>
+                  <div class="text-sm text-gray-600">
+                    <span class="font-medium">Gains mensuels : </span>
+                    <span class="text-green-600">{{ ((session.actual_users || 1) - 1) * session.price }}€</span>
+                    <div class="text-xs text-gray-500">≈ {{ (((session.actual_users || 1) - 1) * session.price * eurToFcfa).toLocaleString('fr-FR', { maximumFractionDigits: 0 }) }} FCFA</div>
+                  </div>
                   <div v-if="session.invoiceUrl" class="text-sm">
                     <button @click="downloadInvoice(session)" 
                       class="text-blue-600 hover:text-blue-800 flex items-center space-x-1">
@@ -97,7 +114,7 @@
                       <span>Télécharger la facture</span>
                     </button>
                   </div>
-                  <button @click="deleteSession(session.id)" class="text-red-600 hover:text-red-800 text-xs border border-red-200 rounded px-2 py-1 mt-2">Supprimer</button>
+                  <!-- <button @click="deleteSession(session.id)" class="text-red-600 hover:text-red-800 text-xs border border-red-200 rounded px-2 py-1 mt-2">Supprimer</button> -->
                 </div>
               </div>
             </div>
@@ -201,7 +218,9 @@ const loadSessions = async () => {
       verified: session.verified,
       invoiceUrl: session.invoice_url,
       created_at: session.created_at,
-      deleted: session.deleted || false
+      deleted: session.deleted || false,
+      actual_users: session.actual_users || 1,
+      authorized_users: session.authorized_users
     }))
   } catch (error) {
     console.error('Erreur lors du chargement des sessions:', error)
