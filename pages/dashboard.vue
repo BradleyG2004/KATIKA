@@ -380,7 +380,7 @@ const filteredShares = computed(() => {
   return base.filter(share =>
     share.application.toLowerCase().includes(searchQuery.value.toLowerCase()) &&
     share.active === true &&
-    share.authorized_users > share.actual_users
+    share.actual_users < share.authorized_users
   )
 })
 const { $supabase } = useNuxtApp()
@@ -890,6 +890,11 @@ async function handleNotchPayPayment() {
     isProcessingPayment.value = true
     paymentError.value = null
 
+    // Vérifier si la session a atteint sa limite d'utilisateurs
+    if (subscribeSession.value.actual_users >= subscribeSession.value.authorized_users) {
+      throw new Error('Cette session a atteint son nombre maximum d\'utilisateurs')
+    }
+
     // Vérifier que la clé API est présente
     if (!NOTCHPAY_API_KEY) {
       throw new Error('Configuration NotchPay manquante. Veuillez vérifier les variables d\'environnement.')
@@ -932,13 +937,24 @@ async function handleNotchPayPayment() {
         cost: subscribeSession.value.price,
         session_id: subscribeSession.value.id,
         user_id: user.value.id,
-        active: false, // Le statut sera mis à jour après le callback
+        active: true,
         reference
       }])
 
     if (subscriptionError) {
       console.error('Erreur lors de la création de la souscription:', subscriptionError)
       throw new Error('Erreur lors de la création de la souscription')
+    }
+
+    // Mettre à jour le nombre d'utilisateurs actuels de la session
+    const { error: updateError } = await $supabase
+      .from('Session')
+      .update({ actual_users: subscribeSession.value.actual_users + 1 })
+      .eq('id', subscribeSession.value.id)
+
+    if (updateError) {
+      console.error('Erreur lors de la mise à jour du nombre d\'utilisateurs:', updateError)
+      throw new Error('Erreur lors de la mise à jour du nombre d\'utilisateurs')
     }
 
     // Rediriger vers la page de paiement Notch Pay

@@ -15,7 +15,8 @@ export default defineNuxtConfig({
       supabaseKey: process.env.NUXT_PUBLIC_SUPABASE_KEY,
       googleClientId: process.env.GOOGLE_CLIENT_ID,
       encryptionKey: process.env.NUXT_PUBLIC_ENCRYPTION_KEY,
-      notchApiKey: process.env.NUXT_PUBLIC_NOTCH_API_KEY
+      notchApiKey: process.env.NUXT_PUBLIC_NOTCH_API_KEY,
+      cronSecret: process.env.CRON_SECRET
     }
   },
   app: {

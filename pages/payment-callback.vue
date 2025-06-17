@@ -94,7 +94,7 @@ const verifyPayment = async (reference) => {
     //   if (updateError) {
     //     throw new Error('Erreur lors de la mise à jour de la souscription')
     //   }
-    alert("Success")
+    // alert("Success")
     } else if (data.transaction.status === 'pending') {
       // Si le paiement est en attente, on attend un peu et on réessaie
       await new Promise(resolve => setTimeout(resolve, 2000))
