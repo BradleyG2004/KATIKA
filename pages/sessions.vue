@@ -124,7 +124,7 @@
                 <div>
                   <h3 class="font-medium text-gray-900">{{ sub.session?.application?.name || 'Application inconnue' }}</h3>
                   <p class="text-sm text-gray-600">Coût : {{ sub.cost }} €</p>
-                  <p class="text-xs text-gray-500">Créée le : {{ new Date(sub.created_at).toLocaleDateString() }}</p>
+                  <p class="text-xs text-gray-500">Créée le : {{ new Date(sub.created_at).toLocaleString() }}</p>
                   <p class="text-xs" :class="sub.active ? 'text-green-600' : 'text-red-600'">{{ sub.active ? 'Active' : 'Inactive' }}</p>
                 </div>
               </div>
