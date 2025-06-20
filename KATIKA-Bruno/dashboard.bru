@@ -5,7 +5,20 @@ meta {
 }
 
 get {
-  url: http://localhost:3000/dashboard
+  url: https://api.exchangerate.host/latest?base=EUR&symbols=XOFGET /beneficiaries
   body: none
-  auth: none
+  auth: bearer
+}
+
+params:query {
+  base: EUR
+  symbols: XOFGET /beneficiaries
+}
+
+headers {
+  access_key: pk_test.T3pNemDxx0AtA4wF5NQsxjCMi5iEEGDiZKVuPGHBTurcZc58dO2sjeXec7nrWaM3dKZh6a3T1ovMeDt9Lwixs9SPYWEMHqgExzPXEbXQQoiVMiGi3oeo7iW4LH4Ev
+}
+
+auth:bearer {
+  token: pk_test.T3pNemDxx0AtA4wF5NQsxjCMi5iEEGDiZKVuPGHBTurcZc58dO2sjeXec7nrWaM3dKZh6a3T1ovMeDt9Lwixs9SPYWEMHqgExzPXEbXQQoiVMiGi3oeo7iW4LH4Ev
 }

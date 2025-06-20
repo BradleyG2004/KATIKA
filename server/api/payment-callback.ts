@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
     // Vérifier le paiement auprès de Notch Pay
     const response = await globalThis.$fetch<{ transaction: { status: string } }>('https://api.notchpay.co/payments/' + reference, {
       headers: {
-        Authorization: NOTCHPAY_API_KEY
+        Authorization: NOTCHPAY_API_KEY as string
       }
     })
 

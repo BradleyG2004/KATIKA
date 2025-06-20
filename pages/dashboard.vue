@@ -406,14 +406,7 @@ const paymentError = ref(null)
 
 // Configuration de NotchPay via les variables d'environnement
 const config = useRuntimeConfig()
-const NOTCHPAY_API_KEY = config.public.notchApiKey
-
-// Log pour vérifier les variables d'environnement
-// onMounted(() => {
-//   console.log('NotchPay Config:', {
-//     apiKey: NOTCHPAY_API_KEY
-//   })
-// })
+const NOTCHPAY_API_KEY = config.public.notchApiKeyPublic
 
 // Fonction pour charger les sessions depuis Supabase
 const loadShares = async () => {
@@ -434,16 +427,25 @@ const loadShares = async () => {
     // Transformer les données pour correspondre au format attendu
     shares.value = data.map(session => {
       const isNetflix = session.application.name === 'Netflix'
-      let plan = session.plan || ''
-      let authorized_users = session.authorized_users || 0
-      let displayedCost = session.init_cost
+      let authorized_users = (typeof session.authorized_users === 'number' && session.authorized_users > 0)
+        ? session.authorized_users
+        : null;
+      let plan = session.plan || '';
+      let displayedCost = session.init_cost;
+
       if (isNetflix) {
-        if (!plan || !authorized_users) {
-          const planInfo = getNetflixPlanAndUsers(session.init_cost)
-          plan = planInfo.plan
-          authorized_users = planInfo.authorized_users
+        // On ne recalcule authorized_users QUE si la valeur est absente
+        if (authorized_users === null) {
+          const planInfo = getNetflixPlanAndUsers(session.init_cost);
+          plan = planInfo.plan;
+          authorized_users = planInfo.authorized_users;
         }
-        displayedCost = getDisplayedCost(session.init_cost, plan)
+        // On peut recalculer le plan si besoin, mais on ne touche plus à authorized_users
+        if (!plan) {
+          const planInfo = getNetflixPlanAndUsers(session.init_cost);
+          plan = planInfo.plan;
+        }
+        displayedCost = getDisplayedCost(session.init_cost, plan);
       }
       return {
         id: session.id,
@@ -722,6 +724,7 @@ const handleNewShare = async () => {
       // Créer les données du partage
       const totalCost = parseFloat(newShare.value.pdfData.amount)
       const { plan, authorized_users } = getNetflixPlanAndUsers(totalCost)
+      const displayedCost = getDisplayedCost(totalCost, plan)
       const shareData = {
         app_id: selectedApp.id,
         user_app_id: newShare.value.username,
@@ -732,6 +735,7 @@ const handleNewShare = async () => {
         starting_at: formatDateForDB(newShare.value.pdfData.date),
         cancelled_on: newShare.value.pdfData.cancelled_on,
         init_cost: totalCost,
+        users_cost: displayedCost,
         active: isRecentDate(newShare.value.pdfData.date),
         verified: true,
         created_at: new Date().toISOString(),
@@ -750,7 +754,7 @@ const handleNewShare = async () => {
       alert('Votre partage Netflix a été créé avec succès !')
       await loadShares() // Recharger les sessions après la création
       resetForm()
-            } else {
+    } else {
       // Logique existante pour les autres applications
       // ... existing non-Netflix share creation code ...
     }
@@ -786,7 +790,7 @@ const resetForm = () => {
     username: '',
     password: '',
     pdf: null,
-          pdfData: null
+    pdfData: null
   }
   showNewShareModal.value = false
 }
